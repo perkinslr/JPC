@@ -210,8 +210,8 @@ public class SerialPort extends AbstractHardwareComponent implements IODevice
     {
 	this.ioportWrite(address, data);
     }
-    public void ioPortWrite16(int address, int data){}
-    public void ioPortWrite32(int address, int data){}
+    public void ioPortWrite16(int address, int data){System.out.println("got serial data16");}
+    public void ioPortWrite32(int address, int data){System.out.println("got serial data32");}
 
     public int ioPortRead8(int address)
     {
@@ -372,7 +372,7 @@ public class SerialPort extends AbstractHardwareComponent implements IODevice
 	}
     }
 
-    private void print(String data)
+    public void print(String data)
     {
         synchronized (serialOutputBuffer) {
             int newline;

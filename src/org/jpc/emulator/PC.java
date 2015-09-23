@@ -85,15 +85,15 @@ public class PC {
 
     private static final Logger LOGGING = Logger.getLogger(PC.class.getName());
 
-    private final Processor processor;
-    private final PhysicalAddressSpace physicalAddr;
-    private final LinearAddressSpace linearAddr;
-    private final Clock vmClock;
-    private final InterruptController pic;
-    private final List<HardwareComponent> parts;
-    private final CodeBlockManager manager;
-    private EthernetCard ethernet;
-    private final Keyboard keyboard;
+    public Processor processor;
+    public PhysicalAddressSpace physicalAddr;
+    public LinearAddressSpace linearAddr;
+    public Clock vmClock;
+    public InterruptController pic;
+    public List<HardwareComponent> parts;
+    public CodeBlockManager manager;
+    public EthernetCard ethernet;
+    public Keyboard keyboard;
 
     /**
      * Constructs a new <code>PC</code> instance with the specified external time-source and
@@ -119,6 +119,14 @@ public class PC {
      * @throws java.io.IOException propagated from bios resource loading
      */
     public PC(Clock clock, DriveSet drives, int ramSize, Calendar startTime) throws IOException {
+    	this.initialize(clock, drives, ramSize, startTime);
+    }
+    
+    public PC(){
+    	
+    }
+    
+    public void initialize(Clock clock, DriveSet drives, int ramSize, Calendar startTime) throws IOException{
         SYS_RAM_SIZE = ramSize;
         parts = new LinkedList<HardwareComponent>();
 
@@ -235,7 +243,7 @@ public class PC {
         this(new VirtualClock(), args, getStartTime());
     }
 
-    private static Calendar getStartTime()
+    protected static Calendar getStartTime()
     {
         Calendar start = Calendar.getInstance();
         if (Option.startTime.isSet())
@@ -491,7 +499,7 @@ public class PC {
         ((FloppyController) getComponent(FloppyController.class)).changeDisk(disk, index);
     }
 
-    private boolean configure() {
+    protected boolean configure() {
         boolean fullyInitialised;
         int count = 0;
         do {
